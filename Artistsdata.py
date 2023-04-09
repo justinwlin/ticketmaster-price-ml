@@ -50,20 +50,25 @@ with open('dang2.csv', 'w', newline='', encoding='utf-8') as f:
     #   'genre': 'Rock', 'weekend': 1, 'month': '05', 'maxprice': 90.0, 
     #   'minprice': 90.0, 'id': 'Z698xZC2Z17feA4', 'score': 89, 'pop': 'FAKE'}
     for event_data in masterlist.values():
-        data_row = [
-            event_data.get('artist', 'NA'),
-            event_data.get('city', 'NA'),
-            event_data.get('venue', 'NA'),
-            event_data.get('showName', 'NA'),
-            event_data.get('genre', 'NA'),
-            event_data.get('weekend', 'NA'),
-            event_data.get('month', 'NA'),
-            event_data.get('maxprice', 'NA'),
-            event_data.get('minprice', 'NA'),
-            event_data.get('id', 'NA'),
-            event_data.get('score', 'NA'),
-            event_data.get('pop', 'NA')
-        ]
-        writer.writerow(data_row)
+        # If the event_data is an object
+        try:
+            if isinstance(event_data, dict):
+                data_row = [
+                    event_data.get('artist', 'NA'),
+                    event_data.get('city', 'NA'),
+                    event_data.get('venue', 'NA'),
+                    event_data.get('showName', 'NA'),
+                    event_data.get('genre', 'NA'),
+                    event_data.get('weekend', 'NA'),
+                    event_data.get('month', 'NA'),
+                    event_data.get('maxprice', 'NA'),
+                    event_data.get('minprice', 'NA'),
+                    event_data.get('id', 'NA'),
+                    event_data.get('score', 'NA'),
+                    event_data.get('pop', 'NA')
+                ]
+                writer.writerow(data_row)
+        except:
+            print("Unable to write: ", event_data)
 
     #writer.writerow(masterlist.get(ln).get(ln))
