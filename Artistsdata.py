@@ -29,35 +29,41 @@ artists=['Post Malone', 'Drake',
 
 ]
 
-masterlist={}
-for i in range(0,1):
-    dict=TMdataRYAN.eventer(artists[i])
-    masterlist.update(dict)
+masterlist = {}
 
+# loop through the list of artists and collect event data using the eventer function
+for artist in artists:
+    event_dict = TMdataRYAN.eventer(artist)
+    masterlist.update(event_dict)
 
-with open('dang2.csv', 'w') as f:
+# write the collected data to a CSV file
+with open('dang2.csv', 'w', newline='', encoding='utf-8') as f:
     writer = csv.writer(f)
-    i=0
-    for key, value in masterlist.iteritems():
-        i=i+1
-        ln=[]
-        for ik, iv in value.iteritems():
-            ln.append(ik)
-    writer.writerow(ln)
-    for j in range(0,len(masterlist.items())):
-        lan=[]
-        for i in range(0,len(ln)):
-            lalaa= masterlist.items()[j][1].items()[i][1]
-            #btr=str(lalaa)
-            a=u'unicode'
-            b='string'
-            c=15
-            if type(lalaa)==type(a):
-                lan.append(lalaa.encode("utf-8"))
-            elif type(lalaa)==type(b) or type(lalaa)==type(c):
-                lan.append(str(lalaa))
-            else:
-                lan.append(str(lalaa))
-        writer.writerow(lan)
+
+    # write the header row to the CSV file
+    header_row = ['artist', 'city', 'venue', 'showName', 'genre', 'weekend', 'month', 'maxprice', 'minprice', 'id', 'score', 'pop']
+    writer.writerow(header_row)
+    print(masterlist.values())
+    # write the data rows to the CSV file
+    # {'artist': 'Post Malone', 'city': 'Cologne',
+    #   'venue': 'NA', 'showName': 'Post Malone | Logen-Package', 
+    #   'genre': 'Rock', 'weekend': 1, 'month': '05', 'maxprice': 90.0, 
+    #   'minprice': 90.0, 'id': 'Z698xZC2Z17feA4', 'score': 89, 'pop': 'FAKE'}
+    for event_data in masterlist.values():
+        data_row = [
+            event_data.get('artist', 'NA'),
+            event_data.get('city', 'NA'),
+            event_data.get('venue', 'NA'),
+            event_data.get('showName', 'NA'),
+            event_data.get('genre', 'NA'),
+            event_data.get('weekend', 'NA'),
+            event_data.get('month', 'NA'),
+            event_data.get('maxprice', 'NA'),
+            event_data.get('minprice', 'NA'),
+            event_data.get('id', 'NA'),
+            event_data.get('score', 'NA'),
+            event_data.get('pop', 'NA')
+        ]
+        writer.writerow(data_row)
 
     #writer.writerow(masterlist.get(ln).get(ln))
